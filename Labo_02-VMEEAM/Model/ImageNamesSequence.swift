@@ -6,7 +6,7 @@
 //
 import Foundation;
 
-let imageSequenceData = [
+let imageNamesSequence = [
     "0_echafaud",
     "1_tete",
     "2_corps",

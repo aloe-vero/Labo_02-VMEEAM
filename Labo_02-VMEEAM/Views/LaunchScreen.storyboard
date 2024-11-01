@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UNI" translatesAutoresizingMaskIntoConstraints="NO" id="QKV-w2-qM9">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jjj" translatesAutoresizingMaskIntoConstraints="NO" id="QKV-w2-qM9">
                                 <rect key="frame" x="20" y="247" width="350" height="350"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="350" id="3Dc-Px-bI4"/>
@@ -38,7 +38,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="UNI" width="494" height="507"/>
+        <image name="jjj" width="1325" height="1764"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

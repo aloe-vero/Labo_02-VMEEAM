@@ -4,6 +4,12 @@
 //
 //  Created by Veronica Mendoza - Escobar on 2024-10-27.
 //
+//
+//  GestionnaireDeFilms.swift
+//  Labo2_JeuDuPendu
+//
+//  Created by Emilie Albert-Moisan (Étudiant) on 2024-10-28.
+//
 
 import Foundation
 
@@ -11,10 +17,10 @@ struct Movie: Decodable {
 	let Title: String
 }
 
-class MovieDownloader {
+class GestionnaireDeFilms {
 	
 	//Singleton instance
-	static let shared = MovieDownloader()
+	static let shared = GestionnaireDeFilms()
 	
 	private init() {}
 	
@@ -46,20 +52,6 @@ class MovieDownloader {
 					completion(nil)
 				}
 			}
-			
-			/*guard let data = data else {
-				print("Données non disponibles")
-				completion(nil)
-				return
-			}
-			
-			do {
-				let movie = try JSONDecoder().decode(Movie.self, from: data)
-				completion(movie)
-			} catch {
-				print("Erreur de décodage: \(error)")
-				completion(nil)
-			}*/
 		}
 		task.resume()
 	}
@@ -71,6 +63,7 @@ class MovieDownloader {
 		let imdbID = imdbIDs[randomIndex]
 		fetchMovie(imdbID: imdbID) { movie in
 			if let movie = movie {
+				print("Titre: \(movie.Title)")
 				completion(movie.Title)
 			} else {
 				completion(nil)

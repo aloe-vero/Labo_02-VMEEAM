@@ -5,35 +5,62 @@
 //  Created by Veronica Mendoza - Escobar on 2024-10-08.
 //
 
+//
+//  JeuPendu.swift
+//  Labo2_JeuDuPendu
+//
+//  Created by Emilie Albert-Moisan (Étudiant) on 2024-10-28.
+//
+
 import Foundation
 
-func jeuPendu(){
+class JeuPendu{
+	//Singleton instance
+	static let shared = JeuPendu()
 	
-	var isGamerunning = true
+	private init() {}
 	
-	MovieDownloader.shared.startDownloading { chaineCachee in
-		guard let chaineCachee = chaineCachee else {
-			print("Erreur: impossible de récupérer le titre du film.")
-			isGamerunning = false
-			return
-		}
-		
-		let chaineTab = Array(chaineCachee)
-		var chaineTabFiltred = chaineCachee.map { character -> Character in
-			
-			if character.isLetter {
-				return "_"
-			} else {
-				return character
+	//attributs
+	public var chaineCachee: String = ""
+	public var chaineTab: [Character] = []
+	public var chaineTabFiltred: [Character] = []
+	public var chaineVue: String = ""
+	public var lettresEssayees: [Character] = []
+	public var nbErreurs: Int = 0
+	public let nbErreursMax: Int = 7
+	public var image: String = ""
+	public var msgErreur = ""
+	
+	//Méthode pour initialiser le en récupérant un film 🍿
+	func chargerFilm(completion: @escaping (Bool) -> Void) {
+		GestionnaireDeFilms.shared.startDownloading{ [weak self] titreFilm in
+			guard let self = self, let titreFilm = titreFilm else {
+				completion(false)
+				return
 			}
+			initialiserJeu(avec: titreFilm)
+			completion(true)
+			
 		}
-		var chaineVue = String(chaineTabFiltred)
+	}
+	
+	// Méthode pour initialiser le jeu avec le titre récupéré
+	private func initialiserJeu(avec titre: String){
+		chaineCachee = titre
+		chaineTab = Array(chaineCachee)
+		chaineTabFiltred = chaineCachee.map { $0.isLetter ? "_" : $0 }
+		chaineVue = String(chaineTabFiltred)
+		lettresEssayees = []
+		nbErreurs = 0
+		image = imageNamesSequence[0]
+		msgErreur = ""
 		
-		var lettresEssayees: [Character] = []
-		var nbErreurs = 0
-		let nbErreursMax = 7
-		
-		func trouve(lettre: Character) {
+	}
+	
+	//Méthode pour vérifier une lettre et mettre à jour le jeu
+	func verifierLettre(_ lettre: String?){
+		if let entree = lettre, entree.count == 1, let lettre = entree.first, lettre.isLetter{
+			msgErreur = ""
 			let lettreMinuscule = lettre.lowercased()
 			if chaineTab.contains(where: { $0.lowercased() == lettreMinuscule }) {
 				for (index, element) in chaineTab.enumerated() {
@@ -45,44 +72,31 @@ func jeuPendu(){
 			} else {
 				if !lettresEssayees.contains(lettre) {
 					nbErreurs += 1
+					image = imageNamesSequence[nbErreurs]
 					lettresEssayees.append(lettre)
 				}
 			}
+		} else {
+			msgErreur = "Veuillez entrer une lettre."
 		}
 		
-		func perdu() -> Bool {
-			return nbErreurs == nbErreursMax
-		}
-		
-		func gagne() -> Bool {
-			return chaineVue == chaineCachee
-		}
-		
-		print("Bienvenue au jeu du bonhomme pendu!")
-		print("Mot cachee: " + chaineCachee)
-		while (!gagne() && !perdu()) {
-			print("Lettres essayées: \(lettresEssayees)")
-			print("Pointage: \(nbErreurs)/\(nbErreursMax)")
-			print("Mot à trouver: \(chaineVue)")
-			print("Entrez une lettre: ")
-			
-			if let entree = readLine(), entree.count == 1, let lettre = entree.first, lettre.isLetter {
-				trouve(lettre: lettre)
-			} else {
-				print("Veuillez entrer une lettre.")
-			}
-		}
-		
-		if gagne() {
-			print("Gagné!!!!!")
-			print("Le film était \(chaineCachee)")
-		} else if perdu() {
-			print("Perdu!!!!!")
-			print("Le film était \(chaineCachee)")
-		}
-		
-		isGamerunning = false
 	}
 	
-	RunLoop.main.run(until: Date(timeIntervalSinceNow: 10))
+	func finDePartie() -> String? {
+		var msg: String? = nil
+		
+		if(chaineVue == chaineCachee){
+			msg = "Vous avez gagné!"
+		}
+		if(nbErreurs == nbErreursMax) {
+			msg = "Vous avez perdu!"
+		}
+		
+		if let message = msg {
+			msg = "\(message)\nLe film était: \(chaineCachee)"
+		}
+		
+		return msg
+	}
+	
 }
