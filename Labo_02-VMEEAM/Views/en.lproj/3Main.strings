@@ -1,0 +1,15 @@
+
+/* Class = "UIButton"; configuration.title = "Valider"; ObjectID = "6Cg-R3-Hko"; */
+"6Cg-R3-Hko.configuration.title" = "Valider";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "6Cg-R3-Hko"; */
+"6Cg-R3-Hko.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Rejouer"; ObjectID = "QIi-SL-zKm"; */
+"QIi-SL-zKm.configuration.title" = "Rejouer";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "QIi-SL-zKm"; */
+"QIi-SL-zKm.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Erreur"; ObjectID = "Zgr-DJ-gyF"; */
+"Zgr-DJ-gyF.text" = "Erreur";
